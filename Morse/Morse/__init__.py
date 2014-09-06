@@ -19,6 +19,7 @@ morse_string = ' '.join(morse_map[x] for x in input_string)
 print(morse_string)
 
 for ch in morse_string:
-    if ch is '.': winsound.Beep(800,50)
-    elif ch is '-': winsound.Beep(800,300)
-    else: time.sleep(.3)
+    if ch is '.': winsound.Beep(900,150)
+    elif ch is '-': winsound.Beep(900,300)
+    elif ch is '/': time.sleep(.2)
+    else: time.sleep(.2)
