@@ -8,7 +8,7 @@ def draw_regex_rec(pixels, regex, pixel_id, xmin, xmax, ymin, ymax):
         if match:
             group_len = sum(len(group) for group in match.groups())
             color = int(255 * group_len / len(pixel_id))
-            pixels[xmin, ymin] = (color, color, color)
+            pixels[xmin, ymin] = (color, 0, 0)
     else:
         xmid = (xmin + xmax) // 2
         ymid = (ymin + ymax) // 2
@@ -18,7 +18,7 @@ def draw_regex_rec(pixels, regex, pixel_id, xmin, xmax, ymin, ymax):
         draw_regex_rec(pixels, regex, pixel_id + "4", xmid + 1, xmax, ymid + 1, ymax)
 
 def draw_regex(size, regex):
-    img = Image.new("RGB", (size, size), "red")
+    img = Image.new("RGB", (size, size), "black")
     draw_regex_rec(img.load(), regex, "", 0, size - 1, 0, size - 1)
     img.save('image.png')
 
