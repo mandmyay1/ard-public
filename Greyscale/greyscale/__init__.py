@@ -3,12 +3,12 @@ import os
 
 file = input("Enter file to conver to greyscale ")
 newFile = os.path.join( os.path.dirname(file), "grey-" + os.path.basename(file) )
-colorImg = Image.open(file)
-colorPixels = colorImg.load()
-for i in range(colorImg.size[0]):
-    for j in range(colorImg.size[1]):
-        pixel = colorPixels[i,j]
+img = Image.open(file)
+pixels = img.load()
+for i in range(img.size[0]):
+    for j in range(img.size[1]):
+        pixel = pixels[i,j]
         luminosityPixel = int(0.21 * pixel[0] + 0.72 * pixel[1] + 0.07 * pixel[2])
-        colorPixels[i,j] = (luminosityPixel,luminosityPixel,luminosityPixel)
-colorImg.save(newFile)
+        pixels[i,j] = (luminosityPixel,luminosityPixel,luminosityPixel)
+img.save(newFile)
 print("Saved greyscale copy at", newFile)
