@@ -40,8 +40,8 @@ if __name__ == '__main__':
     blackColor = pygame.Color(0,0,0)
     mousex, mousey = 0,0
     charx,chary = pickRandomSpot()
-    tokens = {pickRandomSpot() for _ in range(randint(50,100))} - {(charx,chary)}
-    print(tokens)
+    tokens = {pickRandomSpot() for _ in range(100)} - {(charx,chary)}
+    #print(tokens)
     moves = 100
     score = 0
     message = 'Hello World'
