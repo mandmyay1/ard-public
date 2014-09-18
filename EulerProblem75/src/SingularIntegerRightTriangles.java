@@ -1,8 +1,10 @@
-
+package src;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 
 public class SingularIntegerRightTriangles {
@@ -41,15 +43,19 @@ public class SingularIntegerRightTriangles {
 	
 	int numberIntegerRightTriangles(int circumference){
 		Set<ThreeNumbers> s = new TreeSet<ThreeNumbers>();
+		int count = 0;
 		for( int a = 1; a < circumference/2; a++ ){
 			int b = ((circumference*circumference/2) - circumference*a)/(circumference - a);
+			float bb = (((float)(circumference*circumference)/2) - circumference *a)/((float)(circumference -a));
 			//for( int b = 1; b < circumference/2; b++){
 				int c = circumference - a - b;
 				if( a*a + b*b == c*c ){
 					ThreeNumbers t = new ThreeNumbers(a,b,c);
 					if( !s.contains(t)){
-						System.out.println(Integer.toString(a)+" " + Integer.toString(b) + " " + Integer.toString(c) + "="+Integer.toString(circumference));
+						//System.out.println(Integer.toString(a)+" " + Integer.toString(b) + " " + Integer.toString(c) + "="+Integer.toString(circumference) + " float bb=" + Float.toString(bb));
 						s.add(t); 
+						count++;
+						if( count > 1 ){ return count; }
 					}
 				}
 			//}
@@ -58,11 +64,54 @@ public class SingularIntegerRightTriangles {
 		return s.size();
 		
 	}
+	
+	public int gcd(int a, int b){
+		if( b == 0 ){
+			return a;
+		}
+		return gcd( b, a % b );
+	}
+	
+	public int calculatePythagoreanTriples(int maxCircumference){
+		Map<Integer, Integer> listUniques = new TreeMap<Integer,Integer>();
+		for( int n = 1; n < maxCircumference/2; n++ ){
+			for( int m = n+1; m < maxCircumference/2; m++ ){
+				if( 1 == (m-n)%2 &&  1 == gcd(m, n)){
+					int a = m*m - n*n;
+					int b = 2*m*n;
+					int c = m*m + n*n;
+					for( int k = 1; k < maxCircumference/2; k++ ){
+						int circumference = k*a+k*b+k*c;
+						if( circumference > maxCircumference ){ break; }
+						//System.out.println(Integer.toString(a)+" " + Integer.toString(b) + " " + Integer.toString(c) + "="+Integer.toString(circumference) + " m="+Integer.toString(m) + " n=" + Integer.toString(n));
+						if( listUniques.containsKey(circumference)){
+							//int current = ;
+							listUniques.put(circumference, listUniques.get(circumference)+1);
+							//System.out.println("removing " + Integer.toString(circumference));
+						}
+						else{
+							//System.out.println("Adding " + Integer.toString(circumference));
+							listUniques.put(circumference, 1);
+						}
+					}
+				}
+			}
+		}
+		int count = 0;
+		for(Map.Entry<Integer,Integer> entrySet : listUniques.entrySet() ){
+			if( entrySet.getValue() == 1 ){ 
+				//System.out.println(""+Integer.toString(entrySet.getKey()));
+				count++; }
+		}
+		return count;
+	}
+	
 	public static void main(String[] args) {
-		int max = 250;//1500000;
+		int max = 1500000;
 		SingularIntegerRightTriangles s = new SingularIntegerRightTriangles();
 		int totalNum = 0;
-		for(int i = 1; i <= max; i++ ){
+		System.out.println("Wiki way = " + Integer.toString(s.calculatePythagoreanTriples(max)));
+		/*for(int i = 1; i <= max; i++ ){
 			if( i % 10000 == 0 ){
 				System.out.println("Up to " + Integer.toString(i) + " with "+ Integer.toString(totalNum)+ " matches ");
 			}
@@ -73,6 +122,7 @@ public class SingularIntegerRightTriangles {
 			}
 		}
 		System.out.println("There are " + Integer.toString(totalNum) + " numbers less than " + Integer.toString(max) + " that solve the numberIntegerRightTriangles exactly once ");
+		*/
 	}
 
 }

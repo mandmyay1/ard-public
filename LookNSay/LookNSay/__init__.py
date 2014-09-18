@@ -17,6 +17,6 @@ def lookNSay(number, seed=1):
 
 #num = int(input("Enter positive number, sequence number "))
 seed = randint(1,500)
-num = randint(30,40)
+num = randint(1,40)
 print("lookNSay", num, seed)
 print(lookNSay(num, seed))
