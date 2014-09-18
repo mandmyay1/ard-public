@@ -43,12 +43,13 @@ public class SingularIntegerRightTriangles {
 		Set<ThreeNumbers> s = new TreeSet<ThreeNumbers>();
 		for( int a = 1; a < circumference/2; a++ ){
 			int b = ((circumference*circumference/2) - circumference*a)/(circumference - a);
+			float bb = ((circumference*circumference/2) - circumference*a)/(circumference - a);
 			//for( int b = 1; b < circumference/2; b++){
 				int c = circumference - a - b;
 				if( a*a + b*b == c*c ){
 					ThreeNumbers t = new ThreeNumbers(a,b,c);
 					if( !s.contains(t)){
-						System.out.println(Integer.toString(a)+" " + Integer.toString(b) + " " + Integer.toString(c) + "="+Integer.toString(circumference));
+						System.out.println(Integer.toString(a)+" " + Integer.toString(b) + " " + Integer.toString(c) + "="+Integer.toString(circumference) + " float b=" + Float.toString(bb));
 						s.add(t); 
 					}
 				}
@@ -59,7 +60,7 @@ public class SingularIntegerRightTriangles {
 		
 	}
 	public static void main(String[] args) {
-		int max = 250;//1500000;
+		int max = 1000;//250;//1500000;
 		SingularIntegerRightTriangles s = new SingularIntegerRightTriangles();
 		int totalNum = 0;
 		for(int i = 1; i <= max; i++ ){
