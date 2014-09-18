@@ -46,13 +46,21 @@ public class SingularIntegerRightTriangles {
 		int count = 0;
 		for( int a = 1; a < circumference/2; a++ ){
 			int b = ((circumference*circumference/2) - circumference*a)/(circumference - a);
+<<<<<<< HEAD
 			float bb = (((float)(circumference*circumference)/2) - circumference *a)/((float)(circumference -a));
+=======
+			float bb = ((circumference*circumference/2) - circumference*a)/(circumference - a);
+>>>>>>> 4f1a4c4916bd3feaf35e1ea1566020dc4679902b
 			//for( int b = 1; b < circumference/2; b++){
 				int c = circumference - a - b;
 				if( a*a + b*b == c*c ){
 					ThreeNumbers t = new ThreeNumbers(a,b,c);
 					if( !s.contains(t)){
+<<<<<<< HEAD
 						//System.out.println(Integer.toString(a)+" " + Integer.toString(b) + " " + Integer.toString(c) + "="+Integer.toString(circumference) + " float bb=" + Float.toString(bb));
+=======
+						System.out.println(Integer.toString(a)+" " + Integer.toString(b) + " " + Integer.toString(c) + "="+Integer.toString(circumference) + " float b=" + Float.toString(bb));
+>>>>>>> 4f1a4c4916bd3feaf35e1ea1566020dc4679902b
 						s.add(t); 
 						count++;
 						if( count > 1 ){ return count; }
@@ -107,7 +115,11 @@ public class SingularIntegerRightTriangles {
 	}
 	
 	public static void main(String[] args) {
+<<<<<<< HEAD
 		int max = 1500000;
+=======
+		int max = 1000;//250;//1500000;
+>>>>>>> 4f1a4c4916bd3feaf35e1ea1566020dc4679902b
 		SingularIntegerRightTriangles s = new SingularIntegerRightTriangles();
 		int totalNum = 0;
 		System.out.println("Wiki way = " + Integer.toString(s.calculatePythagoreanTriples(max)));
