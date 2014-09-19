@@ -1,24 +1,48 @@
 import functools
+from math import sqrt
 
-def triangle_number(num):
-    l = [i for i in range(1, num+1)]
-    return functools.reduce(lambda x,y: x+y, l)
-    
-def divisors(num):
-    l = []
+
+def is_prime(number):
+    if number > 1:
+        if number == 2:
+            return True
+        if number % 2 == 0:
+            return False
+        for current in range(3, int(sqrt(number) + 1), 2):
+            if number % current == 0: 
+                return False
+        return True
+    return False
+
+
+
+def primeFactors(num):
+    listOfPrimeFactors = {}
     i = 1
-    while i <= num:
-        if num % i is 0: l.append(i)
-        i += 1
-    return l
-
+    while num > 1:
+        if is_prime(i) and num % i is 0 :
+            if i in listOfPrimeFactors:
+                listOfPrimeFactors[i] += 1
+            else:
+                listOfPrimeFactors[i] = 1
+            #listOfPrimeFactors.append(i)
+            num = num // i
+            #i = max()
+        else: i += 1
+    return listOfPrimeFactors
+        
+        
 currentTriangle = 0
 i = 1
 while True:
     currentTriangle = currentTriangle+i
-    #print(currentTriangle)
-    d = divisors(currentTriangle)
-    if len(d) > 500:
-        print( currentTriangle, i )
-        break;
+    factors = primeFactors(currentTriangle)
+    numFactors = 1
+    for item in sorted(factors.values()):
+        numFactors *= (1+item)
+    if numFactors > 500:
+        print( currentTriangle, i, numFactors )
+        break
     i += 1
+    
+    
