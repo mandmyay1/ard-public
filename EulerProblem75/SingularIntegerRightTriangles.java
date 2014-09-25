@@ -47,11 +47,21 @@ public class SingularIntegerRightTriangles {
 				//System.out.println(""+Integer.toString(entrySet.getKey()));
 				count++; }
 		}
+		//Next part is for problem 39
+		int maxSolutions = 0;
+		int max = 0;
+		for(Map.Entry<Integer,Integer> entrySet : listUniques.entrySet() ){
+			if( entrySet.getValue() > max ){ 
+				max =  entrySet.getValue();
+				maxSolutions = entrySet.getKey();
+			}
+		}
+		System.out.println("Max is "+Integer.toString(maxSolutions)+ " with "+Integer.toString(max));
 		return count;
 	}
 	
 	public static void main(String[] args) {
-		int max = 1500000;
+		int max = 1000;//1500000;
 		SingularIntegerRightTriangles s = new SingularIntegerRightTriangles();
 		int totalNum = 0;
 		System.out.println("Wiki way = " + Integer.toString(s.calculatePythagoreanTriples(max)));
