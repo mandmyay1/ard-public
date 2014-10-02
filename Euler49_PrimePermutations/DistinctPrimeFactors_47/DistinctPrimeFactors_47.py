@@ -12,13 +12,18 @@ def is_prime(number):
         return True
     return False
 
-listPrimes = [i for i in range(1,1000000) if is_prime(i)]
+listPrimes = []
+maxPrime = 0
 
 def primeFactors(num):
     listOfPrimeFactors = {}
     global listPrimes
+    global maxPrime
     i = 1
     while num > 1:
+        if i > maxPrime and is_prime(i):
+            listPrimes.append(i)
+            maxPrime = i
         if i in listPrimes and num % i is 0 :
             if i in listOfPrimeFactors:
                 listOfPrimeFactors[i] += 1
@@ -38,12 +43,13 @@ while True:
     c4 = start +3
     p1 = primeFactors(c1)
     if len(p1) is 4:
-        p2 = primeFactors(c2)
-        if len(p2) is 4:
-            p3 = primeFactors(c3)
-            if len(p3) is 4:
-                p4 = primeFactors(c4)
-                if len(p4) is 4:
+        p4 = primeFactors(c4)
+        if len(p4) is 4:
+            p2 = primeFactors(c2)
+            if len(p2) is 4:
+                p3 = primeFactors(c3)
+                if len(p3) is 4:
                     print(c1, c2, c3, c4)
                     break
+        else: start = c4
     start += 1
