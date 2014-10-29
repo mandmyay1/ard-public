@@ -13,22 +13,22 @@ def is_prime(number):
     return False
 
 
-listPrimes = [i for i in range(1,1000000) if is_prime(i)]
+setPrimes = [i for i in range(1,1000000) if is_prime(i)]
 
-maxPrime = max(listPrimes)
+maxPrime = max(setPrimes)
 
-print(len(listPrimes))
+print(len(setPrimes))
 
 currentHighestPrime = 0
 currentNumber = 0
-for i in range(len(listPrimes)):
-    s = listPrimes[i]
+for i in range(len(setPrimes)):
+    s = setPrimes[i]
     numCurrent = 1
-    for j in range(i+1, len(listPrimes)):
+    for j in range(i+1, len(setPrimes)):
         numCurrent += 1
-        s += listPrimes[j]
+        s += setPrimes[j]
         if s > maxPrime: break
-        if s in listPrimes:
+        if s in setPrimes:
             if numCurrent > currentNumber:
                 currentNumber = numCurrent
                 currentHighestPrime = s

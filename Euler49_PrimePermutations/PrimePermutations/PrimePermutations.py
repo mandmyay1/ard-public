@@ -26,14 +26,14 @@ def has_equal_distances(listPermutations):
                     return [item, item2, item2+dist]
     return None
 
-listPrimes = [i for i in range(1000,10000) if is_prime(i)]
-#print(len(listPrimes));
+setPrimes = [i for i in range(1000,10000) if is_prime(i)]
+#print(len(setPrimes));
 
 #print( is_permutation(1487, 4817))
 #print( is_permutation(1009, 1013))
 
 listPermutations = {}
-for prime in listPrimes:
+for prime in setPrimes:
     found = False
     for perm in listPermutations:
         if is_permutation(prime, perm):
