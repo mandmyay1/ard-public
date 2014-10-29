@@ -13,12 +13,12 @@ def is_prime(number):
     return False
 
 start = 2
-listPrimes = []
+setPrimes = []
 while True:
     if is_prime(start):
-        listPrimes.append(start)
+        setPrimes.append(start)
     start += 1
-    l = len(listPrimes)
+    l = len(setPrimes)
     if l > 10001:
         break;
-print(listPrimes[10000])
+print(setPrimes[10000])
