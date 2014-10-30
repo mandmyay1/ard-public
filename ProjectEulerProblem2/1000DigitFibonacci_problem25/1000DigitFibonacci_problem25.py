@@ -10,8 +10,8 @@ def nextFibonacciNumber():
         nMinus1 = nextNumber
         termNumber+=1
         
-generator = nextFibonacciNumber()
-for value in generator:
+primeGenerator = nextFibonacciNumber()
+for value in primeGenerator:
     if len(str(value[0])) >= 1000:
         print(value[1], value[0])
         break

@@ -30,12 +30,12 @@ def allRotationsInList(num, listPrimes):
     
 print( allRotationsInList(37, [37,4,73]))
 
-generator = generatePrimes()
-result = next(generator)
+primeGenerator = generatePrimes()
+maxPrime = next(primeGenerator)
 setPrimes = set()
-while result < 1000000:
-    setPrimes.add(result)
-    result = next(generator)
+while maxPrime < 1000000:
+    setPrimes.add(maxPrime)
+    maxPrime = next(primeGenerator)
     
 listPrimes = sorted(list(setPrimes))
 print(len(listPrimes), listPrimes[0], listPrimes[len(listPrimes)-1])

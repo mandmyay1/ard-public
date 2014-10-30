@@ -8,11 +8,11 @@ def factorial():
         yield start
         n += 1
         
-generator = factorial()
+primeGenerator = factorial()
 for _ in range(1,100):
-    next(generator)
+    next(primeGenerator)
     
-fact100 = str(next(generator))
+fact100 = str(next(primeGenerator))
 total = 0
 for char in fact100:
     total += int(char)

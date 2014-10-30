@@ -33,13 +33,13 @@ def isTruncatableAndStillPrime(num, setPrimes):
         strNum = strNum[:-1]
     return True
 
-generator = generatePrimes()
+primeGenerator = generatePrimes()
 setPrimes = set()
-result = next(generator)
+maxPrime = next(primeGenerator)
 setPrimes = set()
-while result < 1000000:
-    setPrimes.add(result)
-    result = next(generator)
+while maxPrime < 1000000:
+    setPrimes.add(maxPrime)
+    maxPrime = next(primeGenerator)
 
 listPrimes = sorted(list(setPrimes))
 print(isTruncatableAndStillPrime(37, setPrimes))

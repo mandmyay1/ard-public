@@ -7,13 +7,13 @@ def generatePentagonal():
         yield n*(3*n-1)//2
         n += 1
         
-generator = generatePentagonal()
+primeGenerator = generatePentagonal()
 
-#listPentagonals = [next(generator) for _ in range(20000)]
-listPentagonals = [next(generator) for _ in range(2)]
+#listPentagonals = [next(primeGenerator) for _ in range(20000)]
+listPentagonals = [next(primeGenerator) for _ in range(2)]
 #print(listPentagonals)
 while True:
-    top = next(generator)
+    top = next(primeGenerator)
     #top = listPentagonals[n]
     for mid in listPentagonals:
         bottom = top - mid
