@@ -36,6 +36,8 @@ while not found8:
     
     for prime in setPrimes:
         strPrime = str(prime)
+        sortedPrime = sorted(strPrime)
+        print(strPrime, sortedPrime)
         for number in numbers:
             #strPrime.
             pass
