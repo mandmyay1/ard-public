@@ -1,15 +1,10 @@
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,22 +12,46 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 
-public class RunningPaceCalculator implements ActionListener {
+public class RunningPaceCalculator {
 	JPanel _panel;
 	JFrame _frame;
 	ButtonGroup group;
-	JTextField minuteField;
-	JTextField hourField;
-	JTextField secondsField;
+	JTextField timeField;
 	JTextField distanceField;
 	JLabel resultsLabel;
 	JRadioButton milesButton;
 	JRadioButton kmButton;
 	
+	class MyKeyListener implements KeyListener{
+		@Override
+		public void keyTyped(KeyEvent arg0) {
+		}
+		
+		@Override
+		public void keyReleased(KeyEvent event) {
+			if( event.getKeyChar() == KeyEvent.VK_ENTER ){
+				if( distanceField.isFocusOwner() ){
+					timeField.requestFocus();
+				}
+				else if( timeField.isFocusOwner() ){
+					distanceField.requestFocus();
+				}
+			}
+			try{
+				calculate();
+			} catch(NumberFormatException e){
+				resultsLabel.setText("ERR");
+			}
+		}
+		
+		@Override
+		public void keyPressed(KeyEvent arg0) {
+		}
+	}
+	
 	public RunningPaceCalculator(){
 		_panel = new JPanel();
 		_panel.setLayout(new GridBagLayout());
-		//_panel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		
 		GridBagConstraints c = new GridBagConstraints();
 		JLabel distLabel = new JLabel("Enter Distance: ");
@@ -48,15 +67,9 @@ public class RunningPaceCalculator implements ActionListener {
 		c.gridwidth = 3;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		distanceField.addKeyListener(new MyKeyListener());
 		_panel.add(distanceField, c);
-		
-		/*JLabel mileLabel = new JLabel("miles");
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 2;
-		c.gridy = 0;
-		_panel.add(mileLabel, c);
-		*/
+
 		milesButton = new JRadioButton("miles");
 		kmButton = new JRadioButton("km");
 		group = new ButtonGroup();
@@ -77,7 +90,6 @@ public class RunningPaceCalculator implements ActionListener {
 		c.gridy = 0;
 		_panel.add(kmButton, c);
 		
-		
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
@@ -88,48 +100,9 @@ public class RunningPaceCalculator implements ActionListener {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 1;
-		hourField = new JTextField("",2);
-		_panel.add(hourField, c);
-		
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 2;
-		c.gridy = 1;
-		_panel.add(new JLabel("h"), c);
-		
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 3;
-		c.gridy = 1;
-		minuteField = new JTextField("",2);
-		_panel.add(minuteField, c);
-		
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 4;
-		c.gridy = 1;
-		_panel.add(new JLabel("m"), c);
-		
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 5;
-		c.gridy = 1;
-		secondsField = new JTextField("",2);
-		_panel.add(secondsField, c);
-		
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 6;
-		c.gridy = 1;
-		_panel.add(new JLabel("s"), c);
-		
-		JButton goButton = new JButton("Calculate");
-		c = new GridBagConstraints();
-		//c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 2;
-		_panel.add(goButton, c);
-		goButton.addActionListener(this);
+		timeField = new JTextField("",5);
+		timeField.addKeyListener(new MyKeyListener());
+		_panel.add(timeField, c);
 		
 		resultsLabel = new JLabel();
 		c = new GridBagConstraints();
@@ -154,26 +127,46 @@ public class RunningPaceCalculator implements ActionListener {
 	}
 	
 	double round(double value, int places){
-	    if (places < 0) throw new IllegalArgumentException();
-
-	    long factor = (long) Math.pow(10, places);
-	    value = value * factor;
-	    long tmp = Math.round(value);
-	    return (double) tmp / factor;
+		if (places < 0) throw new IllegalArgumentException();
+		
+		long factor = (long) Math.pow(10, places);
+		value = value * factor;
+		long tmp = Math.round(value);
+		return (double) tmp / factor;
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		String hStr = hourField.getText();
-		String mStr = minuteField.getText();
-		String sStr = secondsField.getText();
-		double hours = ( hStr.isEmpty() ) ? 0 : Double.parseDouble( hStr );
-		double minutes = ( mStr.isEmpty() ) ? 0 : Double.parseDouble( mStr );
-		double seconds =  ( sStr.isEmpty() ) ? 0 : Double.parseDouble( sStr );
+	
+	public void calculate(){
+		String hStr = timeField.getText();
+		String[] timeSplit = hStr.split("\\.| |:");
+		/*System.out.print(hStr);
+		System.out.print(" ");
+		System.out.print(timeSplit.length);
+		System.out.print(" ");
+		for( String time : timeSplit ){
+			System.out.print(time);
+			System.out.print(" ");
+		}
+		System.out.println();*/
+		double seconds = 0;
+		double minutes = 0;
+		double hours = 0;
+		int numTimes = timeSplit.length;
+		if( 1 == numTimes ){
+			seconds = Double.parseDouble(timeSplit[0]);
+		}
+		else if( 2 == numTimes ){
+			minutes = Double.parseDouble(timeSplit[0]);
+			seconds = Double.parseDouble(timeSplit[1]);
+		}
+		else if( 3 == numTimes ){
+			hours =  Double.parseDouble(timeSplit[0]);
+			minutes = Double.parseDouble(timeSplit[1]);
+			seconds = Double.parseDouble(timeSplit[2]);
+		}
+		
 		
 		String dStr = distanceField.getText();
-		if( dStr.isEmpty() ){ return; }
+		//if( dStr.isEmpty() ){ return; }
 		double distance = Double.parseDouble( dStr );
 		
 		double timeInMinutes = 60 * hours + minutes + seconds / 60;
@@ -189,7 +182,6 @@ public class RunningPaceCalculator implements ActionListener {
 		if(milesButton.isSelected()){ strPace += " minutes/mile"; }
 		else if(kmButton.isSelected()){ strPace += " minutes/km"; }
 		resultsLabel.setText(strPace);
-		
 		
 	}
 }
