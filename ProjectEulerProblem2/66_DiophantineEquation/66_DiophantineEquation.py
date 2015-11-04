@@ -19,7 +19,8 @@ def minimalSolution(D):
 #print(minimalSolution(2))
 #solutions = []
 maxX = 0
-for i in range(151, 1001):
+for i in range(2, 8):
+#for i in range(151, 1001):
     print("checking", i)
     sol = minimalSolution(i)
     if sol:
